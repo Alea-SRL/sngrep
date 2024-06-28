@@ -165,6 +165,12 @@ const char *
 msg_get_payload(sip_msg_t *msg);
 
 /**
+ * @brief Get SIP Message payload length
+ */
+uint32_t
+msg_get_payloadlen(sip_msg_t *msg);
+
+/**
  * @brief Get Time of message from packet header
  *
  * @param msg SIP message

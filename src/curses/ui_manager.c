@@ -376,7 +376,7 @@ draw_message_pos(WINDOW *win, sip_msg_t *msg, int starting)
     // Print msg payload
     line = starting;
     column = 0;
-    for (i = 0; i < strlen(payload); i++) {
+    for (i = 0; i < msg_get_payloadlen(msg); i++) {
         // If syntax highlighting is enabled
         if (syntax) {
             // First line highlight

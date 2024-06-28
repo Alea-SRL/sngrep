@@ -103,6 +103,12 @@ msg_get_payload(sip_msg_t *msg)
     return (const char *) packet_payload(msg->packet);
 }
 
+uint32_t
+msg_get_payloadlen(sip_msg_t *msg)
+{
+    return packet_payloadlen(msg->packet);
+}
+
 struct timeval
 msg_get_time(sip_msg_t *msg) {
     struct timeval t = { };
