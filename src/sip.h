@@ -44,7 +44,7 @@
 #include "vector.h"
 #include "hash.h"
 
-#define MAX_SIP_PAYLOAD 10240
+#define MAX_SIP_PAYLOAD (32 * 1024)
 #define MAX_CALLID_SIZE 1024
 #define MAX_XCALLID_SIZE 1024
 #define MAX_CONTENT_LENGTH_SIZE 10
