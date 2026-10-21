@@ -749,11 +749,12 @@ sip_parse_msg_media(sip_msg_t *msg, const u_char *payload)
     tofree = payload2 = strdup((char*)payload);
     while ((line = strsep(&payload2, "\r\n")) != NULL) {
         media_fmt_pref = 77;
+        memset(media_format, 0, sizeof(media_format));
         // Check if we have a media string
         if (!strncmp(line, "m=", 2)) {
             if (sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu RTP/%*s %u", media_type, &dst.port, &media_fmt_pref) == 3
             ||  sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu UDP/%*s %u", media_type, &dst.port, &media_fmt_pref) == 3
-            ||  sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu udp MCPTT", media_type, &dst.port) == 2) {
+            ||  sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu udp %29[^ ]", media_type, &dst.port, media_format) == 3) {
 
                 // Add streams from previous 'm=' line to the call
                 ADD_STREAM(msg_rtp_stream);
@@ -766,6 +767,11 @@ sip_parse_msg_media(sip_msg_t *msg, const u_char *payload)
                     media_set_address(media, dst);
                     media_set_prefered_format(media, media_fmt_pref);
                     msg_add_media(msg, media);
+
+                    if(strnlen(media_format, sizeof(media_format) - 1) > 0)
+                    {
+                        media_add_format(media, 77, media_format);
+                    }
 
                     /**
                      * From SDP we can only guess destination address port. RTP Capture proccess
@@ -805,11 +811,6 @@ sip_parse_msg_media(sip_msg_t *msg, const u_char *payload)
         if (!strncmp(line, "a=rtpmap:", 9)) {
             if (media && sscanf(line, "a=rtpmap:%u %29[^ ]", &media_fmt_code, media_format) == 2) {
                 media_add_format(media, media_fmt_code, media_format);
-            }
-        }
-        else if (!strncmp(line, "a=fmtp:MCPTT", 12)) {
-            if(media) {
-                media_add_format(media, 77, "MCPTT");
             }
         }
 
