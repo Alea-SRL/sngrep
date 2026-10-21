@@ -65,10 +65,10 @@ ui_mouse_translate(ui_t *ui)
 
 #ifdef NCURSES_MOUSE_VERSION
     if (last.bstate & BUTTON4_PRESSED)
-        return KEY_UP;
+        return KEY_PPAGE;
 #if NCURSES_MOUSE_VERSION > 1
     if (last.bstate & BUTTON5_PRESSED)
-        return KEY_DOWN;
+        return KEY_NPAGE;
 #endif
 #endif
 
