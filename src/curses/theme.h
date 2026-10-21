@@ -36,6 +36,7 @@ enum sngrep_colors_pairs {
     CP_DEFAULT = 0,
     CP_CYAN_ON_DEF,
     CP_YELLOW_ON_DEF,
+    CP_LIGHT_ORANGE_ON_DEF,
     CP_MAGENTA_ON_DEF,
     CP_GREEN_ON_DEF,
     CP_RED_ON_DEF,

@@ -49,6 +49,8 @@
 #include "ui_save.h"
 #include "ui_settings.h"
 
+#define COLOR_LIGHT_ORANGE 180
+
 /**
  * @brief Available panel windows list
  *
@@ -129,6 +131,7 @@ ncurses_init_colors()
     // Initialize colorpairs
     init_pair(CP_CYAN_ON_DEF, accent[COLOR_CYAN], bg);
     init_pair(CP_YELLOW_ON_DEF, accent[COLOR_YELLOW], bg);
+    init_pair(CP_LIGHT_ORANGE_ON_DEF, COLOR_LIGHT_ORANGE, bg);
     init_pair(CP_MAGENTA_ON_DEF, accent[COLOR_MAGENTA], bg);
     init_pair(CP_GREEN_ON_DEF, accent[COLOR_GREEN], bg);
     init_pair(CP_RED_ON_DEF, accent[COLOR_RED], bg);

@@ -149,6 +149,8 @@ sip_attr_color_method(const char *value)
             return COLOR_PAIR(CP_MAGENTA_ON_DEF);
         case SIP_METHOD_SUBSCRIBE:
             return COLOR_PAIR(CP_BLUE_ON_DEF);
+        case SIP_METHOD_PUBLISH:
+            return COLOR_PAIR(CP_LIGHT_ORANGE_ON_DEF);
 	case SIP_METHOD_KDMQ:
 	    return COLOR_PAIR(CP_CYAN_ON_DEF) | A_BOLD;
         default:
