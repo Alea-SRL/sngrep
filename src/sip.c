@@ -748,10 +748,12 @@ sip_parse_msg_media(sip_msg_t *msg, const u_char *payload)
     // Parse each line of payload looking for sdp information
     tofree = payload2 = strdup((char*)payload);
     while ((line = strsep(&payload2, "\r\n")) != NULL) {
+        media_fmt_pref = 77;
         // Check if we have a media string
         if (!strncmp(line, "m=", 2)) {
             if (sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu RTP/%*s %u", media_type, &dst.port, &media_fmt_pref) == 3
-            ||  sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu UDP/%*s %u", media_type, &dst.port, &media_fmt_pref) == 3) {
+            ||  sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu UDP/%*s %u", media_type, &dst.port, &media_fmt_pref) == 3
+            ||  sscanf(line, "m=%" STRINGIFY(MEDIATYPELEN) "s %hu udp MCPTT", media_type, &dst.port) == 2) {
 
                 // Add streams from previous 'm=' line to the call
                 ADD_STREAM(msg_rtp_stream);
@@ -803,6 +805,11 @@ sip_parse_msg_media(sip_msg_t *msg, const u_char *payload)
         if (!strncmp(line, "a=rtpmap:", 9)) {
             if (media && sscanf(line, "a=rtpmap:%u %29[^ ]", &media_fmt_code, media_format) == 2) {
                 media_add_format(media, media_fmt_code, media_format);
+            }
+        }
+        else if (!strncmp(line, "a=fmtp:MCPTT", 12)) {
+            if(media) {
+                media_add_format(media, 77, "MCPTT");
             }
         }
 
