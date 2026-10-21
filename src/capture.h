@@ -74,7 +74,7 @@
 #include "vector.h"
 
 //! Max allowed packet assembled size
-#define MAX_CAPTURE_LEN 20480
+#define MAX_CAPTURE_LEN (32 * 1024)
 //! Max allowed packet length
 #define MAXIMUM_SNAPLEN 262144
 
